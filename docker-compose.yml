@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  dance-verify:
+    build: .
+    ports:
+      - "3402:3402"
+    environment:
+      - PORT=3402
+      - WALLET_ADDRESS=0x1e1A34178d80a03E8F4B78f9Cc2AFA8Db23BB092
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3402/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
